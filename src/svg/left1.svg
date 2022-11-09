@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="300" stroke="" height="100" version="1.1">
+    <defs>
+
+        <filter id="filterId2" height="120%" width="150%" x="-15%" y="-15%" filterUnits="userSpaceOnUse">
+            <feMorphology operator="dilate" radius="4" in="SourceAlpha" result="thicken" />
+            <feGaussianBlur in="thicken" stdDeviation="3" result="blurred" />
+            <feFlood flood-color="#eee" result="glowColor" />
+            <feComposite in="glowColor" in2="blurred" operator="in" result="softGlowColored" />
+            <feMerge>
+                <feMergeNode in="softGlowColored"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <filter id="filterId" height="120%" width="150%" x="-15%" y="-15%" filterUnits="userSpaceOnUse">
+            <feMorphology operator="dilate" radius="0.1" in="SourceAlpha" result="thicken" />
+        </filter>
+
+    </defs>
+    <rect width="100%" height="100%" fill="white"/>
+
+    <text x="20" y="40" font-size="16" style="text-anchor: start"
+          font-weight="bold" font-family="Microsoft YaHei"
+    >ILCE-7RM4
+    </text>
+    <text x="20" y="70" font-size="12" style="text-anchor: start"
+          font-weight="100" font-family="Microsoft YaHei"
+    >Dolby Vision with Deep Fusion
+    </text>
+
+
+</svg>

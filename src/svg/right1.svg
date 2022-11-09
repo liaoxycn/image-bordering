@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="300" stroke="" height="100" >
+    <defs>
+
+        <filter id="filterId2" height="120%" width="150%" x="-15%" y="-15%" filterUnits="userSpaceOnUse">
+            <feMorphology operator="dilate" radius="4" in="SourceAlpha" result="thicken" />
+            <feGaussianBlur in="thicken" stdDeviation="3" result="blurred" />
+            <feFlood flood-color="#eee" result="glowColor" />
+            <feComposite in="glowColor" in2="blurred" operator="in" result="softGlowColored" />
+            <feMerge>
+                <feMergeNode in="softGlowColored"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <filter id="filterId" height="120%" width="150%" x="-15%" y="-15%" filterUnits="userSpaceOnUse">
+            <feMorphology operator="dilate" radius="0.1" in="SourceAlpha" result="thicken" />
+        </filter>
+
+    </defs>
+    <rect width="100%" height="100%" fill="white"/>
+
+
+
+    <line x1="90" y1="34" x2="90" y2="70" style="stroke:#ccc;text-anchor: start;" stroke-width="1"/>
+
+
+    <text x="100" y="48" font-size="14" font-weight="bold" font-family="Microsoft YaHei"
+          style="text-anchor: start"
+          textLength="154" lengthAdjust="spacingAndGlyphs"
+    >85mm f/2 1/500 ISO 100</text>
+
+    <text x="100" y="67" font-size="12" font-weight="300" fill="#555" font-family="Microsoft YaHei"
+          style="text-anchor: start"
+          textLength="110" lengthAdjust="spacingAndGlyphs">2022.08.21 17:01:04</text>
+
+</svg>
