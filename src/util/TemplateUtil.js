@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const sharp = require("sharp");
 const lodash = require("lodash");
 /**
@@ -23,7 +24,7 @@ const getTxt = (path = "") => {
     })
 }
 
-const svgDir = process.cwd() + "/src/svg/";
+const svgDir = RootPath + "/src/svg/";
 
 const logoTextMap = {
     "sony": ""
@@ -139,19 +140,19 @@ const loadLogoText = async () => {
 }
 loadLogoText();
 
-const getLogo = (key = "", lens = "") => {
-    key = key || "";
+const getLogo = (make = "", lens = "") => {
+    make = make || "";
     lens = lens || "";
-    if (!key) {
+    if (!make) {
         if (lens.startsWith("EF")) {
-            key = "canon";
+            make = "canon";
         } else if (lens.startsWith("FE")) {
-            key = "sony";
+            make = "sony";
         } else if (lens.startsWith("NIKKOR")) {
-            key = "nikon";
+            make = "nikon";
         }
     }
-    let obj = logoTextMap[key] || logoTextMap["leica"];
+    let obj = logoTextMap[make] || logoTextMap["leica"];
     return {
         ...obj,
         txt: lodash.clone(obj.txt)
@@ -186,8 +187,8 @@ const getTemp1 = async ({
             }
 
 
-            let leftSvg = await getTxt(svgDir + "left1.svg");
-            let rightSvg = await getTxt(svgDir + "right1.svg");
+            let leftSvg = await getTxt(svgDir + "template1/left1.svg");
+            let rightSvg = await getTxt(svgDir + "template1/right1.svg");
             //logo
             let logoKey = (metadata.Make || "").replace(" ", "").trim().toLowerCase();
             let {

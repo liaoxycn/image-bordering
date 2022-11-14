@@ -1,27 +1,26 @@
 {
-  "name": "nodetest",
+  "name": "image-bordering",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build2": "pkg package.json",
-    "pkgWin": "chcp 65001 && pkg . -t node14-win-x64 -o Bordering --options max_old_space_size=4096",
+    "pkgWin": "chcp 65001 && pkg . -t node12-win-x64 -o Bordering --options max_old_space_size=4096",
     "dev": "chcp 65001 && node index.js \"D:\\Pictures\\Saved Pictures\\微信图片_20221110001204.jpg\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": "./index.js",
   "pkg": {
     "assets": [
-      "node_modules/exiftool-vendored.exe",
-      "exe"
+      "assets/**/*",
+      "src/svg/**/*"
     ],
     "outputPath": "bin",
     "scripts": [
-      "index.js",
       "src/**/*.js"
     ],
     "targets": [
-      "node14-win-x64"
+      "node12-win-x64"
     ]
   },
   "keywords": [],

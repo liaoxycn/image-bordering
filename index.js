@@ -1,14 +1,12 @@
 //
+global.RootPath = __dirname;
 let readlineSync = require('readline-sync');
-const Lazy_1 = require("exiftool-vendored/dist/Lazy");
 const os = require("os");
 const sharp = require("sharp");
-
+global.RootPath = __dirname;
 const TemplateUtil = require(__dirname+'/src/util/TemplateUtil.js');
 const ImageUtil = require(__dirname+'/src/util/ImageUtil.js');
 
-const isWin32 = (0, Lazy_1.lazy)(() => os.platform() === "win32");
-console.log(`isWin32 = ${isWin32()} \\n   `)
 
 let arguments = process.argv;
 
