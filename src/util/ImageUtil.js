@@ -1,17 +1,17 @@
-
 const {parseJSON, ExifTool} = require("exiftool-vendored")
+const sharp = require("sharp");
+const TemplateUtil = require("./TemplateUtil");
 const exiftool = new ExifTool({taskTimeoutMillis: 3000})
 
 async function getFileMetadata(url = "") {
-    console.log("#getFileMetadata  url="+url)
+    console.log("#getFileMetadata  url=" + url)
     try {
-        const exiftool = new ExifTool({taskTimeoutMillis: 3000})
         const tags = await exiftool.read(url)
         const str = JSON.stringify(tags)
 
         const tagsJson = parseJSON(str)
         console.log("======================")
-        console.log(tagsJson)
+        // console.log(tagsJson)
         console.log("======================")
         return {
             ImageWidth: tagsJson.ImageWidth,//图片宽度
@@ -37,6 +37,45 @@ async function getFileMetadata(url = "") {
     }
 }
 
+const coverImage = (path = "", template = "temp1") => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let tags = await getFileMetadata(path);
+            let file = {
+                path: path,
+                metadata: tags,
+            };
+            let {buff, divHeight=0} = await TemplateUtil.getTemp1(file);
+            console.log({
+                divHeight: divHeight,
+                width: file.metadata.ImageWidth,
+                height: file.metadata.ImageHeight + divHeight,
+            })
+            sharp({
+                create: {
+                    width: file.metadata.ImageWidth,
+                    height: file.metadata.ImageHeight + divHeight,
+                    channels: 3,
+                    fastShrinkOnLoad: false,
+                    background: {r: 255, g: 255, b: 255, alpha: 1}
+                }
+            }).composite([
+                {input: path, gravity: 'northwest', top: 0, left: 0},
+                {input: buff, gravity: 'southeast', top: file.metadata.ImageHeight, left: 0},
+            ]).toFile(path + '.combined.jpg').then(r => {
+                resolve("ok")
+            });
+        } catch (e) {
+            console.error(e);
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     getFileMetadata: getFileMetadata,
+    coverImage: coverImage,
+    close() {
+        exiftool.end();
+    }
 }

@@ -6,7 +6,7 @@
   "scripts": {
     "build2": "pkg package.json",
     "pkgWin": "chcp 65001 && pkg . -t node12-win-x64 -o Bordering --options max_old_space_size=4096",
-    "dev": "chcp 65001 && node index.js \"D:\\Pictures\\Saved Pictures\\微信图片_20221110001204.jpg\"",
+    "dev": "chcp 65001 && node index.js ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": "./index.js",

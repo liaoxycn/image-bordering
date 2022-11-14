@@ -163,7 +163,6 @@ const getLogo = (make = "", lens = "") => {
 const formatDate = (date = {}) => {
     if (date.rawValue) {
         const {year = "", month = "", day = "", hour = "", minute = "", second = ""} = date;
-        console.log("", date)
         let tt = `${year}-${(month + "").length == 1 ? "0" + month : month}-${(day + "").length == 1 ? "0" + day : day} ${(hour + "").length == 1 ? "0" + hour : hour}:${(minute + "").length == 1 ? "0" + minute : minute}:${(second + "").length == 1 ? "0" + second : second}`
         tt = tt.replace("::", "");
         return tt;
@@ -172,7 +171,7 @@ const formatDate = (date = {}) => {
 }
 
 
-const getTemp1 = async ({
+const getTemp1 = ({
                             make,
                             name, path,
                             metadata = {}
@@ -185,6 +184,7 @@ const getTemp1 = async ({
                 console.log("图片过小")
                 return;
             }
+            let maxHeightInt = parseInt(maxHeight + "")
 
 
             let leftSvg = await getTxt(svgDir + "template1/left1.svg");
@@ -197,19 +197,21 @@ const getTemp1 = async ({
                 ra_left,
                 ra_top
             } = getLogo(logoKey, metadata.LensModel || metadata.LensInfo);
-            console.log({
-                logoKey, ra_height, ra_left, ra_top
-            })
+            // console.log({
+            //     logoKey, ra_height, ra_left, ra_top
+            // })
             //替换字符
             let leftChar = metadata.LensModel || metadata.LensInfo || metadata.Model || metadata.Make;
+            console.debug(`leftChar=` + leftChar)
             if (!leftChar) {
+                console.debug("没有设备信息，不处理")
                 return;
             }
             leftSvg = leftSvg.replace("ILCE-7RM4", leftChar);
             //
             let len = metadata.FocalLength.replace(" ", "").replace(".0", "") || "00mm";
             let sss = len + " f/" + (metadata.FNumber || "1") + " " + (metadata.ExposureTime || "1/1000") + " ISO " + (metadata.ISO || "100");
-            console.log(sss)
+            // console.log(sss)
             rightSvg = rightSvg.replace("85mm f/2 1/500 ISO 100", sss || "00mm f/1 1/1000 ISO 100");
             //时间格式
             let tt = formatDate(metadata.DateCreated || metadata.FileCreateDate);
@@ -220,14 +222,12 @@ const getTemp1 = async ({
             const logoBuffer = Buffer.from(sonyLogoSvg);
 
             let divWidth = metadata.ImageWidth;
-            // let maxHeight = (metadata.ImageWidth > metadata.ImageHeight) ?
-            //     metadata.ImageWidth * 0.08542872172540768 : metadata.ImageHeight * 0.10332491582491582;
 
             let fa = maxHeight / 100;
-            console.log(`fa = ${fa}`)
-
+            console.log(`当前放大倍数 = ${fa}`)
 
             console.log({
+                logoKey, ra_height, ra_left, ra_top,
                 ImageWidth: metadata.ImageWidth,
                 ImageHeight: metadata.ImageHeight,
                 borderHeight: maxHeight,
@@ -251,6 +251,9 @@ const getTemp1 = async ({
                 left: parseInt((divWidth - (maxHeight * ra_left) - (divWidth * 0.01)) + ""),
                 top: parseInt(((maxHeight * ra_top)) + ""),
             }
+            console.debug(`leftP`, leftP)
+            console.debug(`rightP`, rightP)
+            console.debug(`logoP`, logoP)
 
             let [data, data2, data3] = await Promise.all([
                 new Promise((resolve) => {
@@ -295,9 +298,10 @@ const getTemp1 = async ({
                 // quality: 90,
                 // chromaSubsampling: '4:4:4'
             }).toBuffer().then(data => {
+                console.debug(`拼接成功 maxHeight=${maxHeightInt}`)
                 resolve({
                     buff: data,
-                    divHeight: parseInt(maxHeight + ""),
+                    divHeight: maxHeightInt,
                 })
                 // sharp(data).toFile(path + ".jpg")
             });
