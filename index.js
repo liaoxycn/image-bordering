@@ -32,7 +32,8 @@ arguments.forEach((val, index) => {
 // console.log('Oh, ' + template + ' and ' + confirm + '!');
 
 //代码添加图片列表路径
-imagePaths.push("D:\\Pictures\\test\\11.jpg");
+imagePaths.push("D:\\Pictures\\A7R4\\20221119\\jpg\\20221119_PixCake\\DSC08741-x1-[16.29].jpg");
+// imagePaths.push("D:\\Pictures\\A7R4\\20221114\\jpg\\20221114_PixCake\\DSC08423-x1-[16.30].jpg");
 
 //
 let taskList = []

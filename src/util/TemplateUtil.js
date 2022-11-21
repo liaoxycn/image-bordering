@@ -172,14 +172,19 @@ const formatDate = (date = {}) => {
 
 
 const getTemp1 = ({
-                            make,
-                            name, path,
-                            metadata = {}
-                        }) => {
+                      make,
+                      name, path,
+                      metadata = {}
+                  }) => {
     return new Promise(async (resolve, reject) => {
         try {
+            let w = metadata.ImageWidth;
+            let h = metadata.ImageHeight;
+            let xxl = (h / w > 1.5) ? (Math.abs(0 - (w / h)) + 0.33) * 0.8 : 1;
+            console.log(`xxl= ${xxl}`)
+            // return;
             let maxHeight = (metadata.ImageWidth > metadata.ImageHeight) ?
-                metadata.ImageWidth * 0.08542872172540768 : metadata.ImageHeight * 0.10332491582491582;
+                metadata.ImageWidth * 0.08542872172540768 : metadata.ImageHeight * 0.10332491582491582 * xxl;
             if (!((maxHeight > 200) || metadata.ImageWidth >= 1000)) {
                 console.log("图片过小")
                 return;
