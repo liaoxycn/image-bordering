@@ -219,7 +219,7 @@ const getTemp1 = ({
             // console.log(sss)
             rightSvg = rightSvg.replace("85mm f/2 1/500 ISO 100", sss || "00mm f/1 1/1000 ISO 100");
             //时间格式
-            let tt = formatDate(metadata.DateCreated || metadata.FileCreateDate);
+            let tt = formatDate(metadata.CreateDate || metadata.DateTimeOriginal || metadata.FileCreateDate);
 
             rightSvg = rightSvg.replace("2022.08.21 17:01:04", tt || "0000.00.00 00:00:00");
             const leftBuffer = Buffer.from(leftSvg);
