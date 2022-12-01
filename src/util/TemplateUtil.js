@@ -206,13 +206,20 @@ const getTemp1 = ({
             //     logoKey, ra_height, ra_left, ra_top
             // })
             //替换字符
-            let leftChar = metadata.LensModel || metadata.LensInfo || metadata.Model || metadata.Make;
+            let leftChar;
+            let leftBottomChar;
+            if (metadata.Model || metadata.Make) {
+                leftChar = metadata.Model || metadata.Make;
+                leftBottomChar = metadata.LensModel || metadata.LensInfo || '--by --';
+            } else {
+                leftChar = metadata.LensModel || metadata.LensInfo;
+            }
             console.debug(`leftChar=` + leftChar)
             if (!leftChar) {
                 console.debug("没有设备信息，不处理")
                 return;
             }
-            leftSvg = leftSvg.replace("ILCE-7RM4", leftChar);
+            leftSvg = leftSvg.replace("ILCE-7RM4", leftChar).replace("--by --", leftBottomChar);
             //
             let len = metadata.FocalLength.replace(" ", "").replace(".0", "") || "00mm";
             let sss = len + " f/" + (metadata.FNumber || "1") + " " + (metadata.ExposureTime || "1/1000") + " ISO " + (metadata.ISO || "100");
@@ -287,10 +294,11 @@ const getTemp1 = ({
                 }),
             ])
 
+            let width = metadata.ImageWidth;
             sharp({
                 create: {
-                    width: metadata.ImageWidth,
-                    height: parseInt(maxHeight + ""),
+                    width: width,
+                    height: maxHeightInt,
                     fastShrinkOnLoad: true,
                     channels: 3,
                     background: {r: 255, g: 255, b: 255, alpha: 1}
@@ -306,6 +314,7 @@ const getTemp1 = ({
                 console.debug(`拼接成功 maxHeight=${maxHeightInt}`)
                 resolve({
                     buff: data,
+                    divWidth: width,
                     divHeight: maxHeightInt,
                 })
                 // sharp(data).toFile(path + ".jpg")

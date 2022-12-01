@@ -11,11 +11,12 @@ async function getFileMetadata(url = "") {
 
         const tagsJson = parseJSON(str)
         console.log("======================")
-        // console.log(tagsJson)
+        console.log(tagsJson)
         console.log("======================")
         return {
             ImageWidth: tagsJson.ImageWidth,//图片宽度
             ImageHeight: tagsJson.ImageHeight,//图片高度
+            CreateDate: tagsJson.CreateDate,//图片创建时间
             DateCreated: tagsJson.DateCreated,//图片创建时间
             Make: tagsJson.Make || "",//制造商（如 SONY
             Model: tagsJson.Model || "",//机型（如 ILCE-7RM4
@@ -45,7 +46,7 @@ const coverImage = (path = "", template = "temp1") => {
                 path: path,
                 metadata: tags,
             };
-            let {buff, divHeight=0} = await TemplateUtil.getTemp1(file);
+            let {buff, divHeight=0, divWidth=0} = await TemplateUtil.getTemp1(file);
             console.log({
                 divHeight: divHeight,
                 width: file.metadata.ImageWidth,
@@ -62,8 +63,12 @@ const coverImage = (path = "", template = "temp1") => {
             }).composite([
                 {input: path, gravity: 'northwest', top: 0, left: 0},
                 {input: buff, gravity: 'southeast', top: file.metadata.ImageHeight, left: 0},
-            ]).toFile(path + '.combined.jpg').then(r => {
-                resolve("ok")
+            ]).jpeg({}).toBuffer().then((data)=>{
+                let h = file.metadata.ImageHeight + divHeight;
+                console.log(`(divHeight=${h}/1080)=`+(h/1080));
+                sharp(data).resize(1080, parseInt(h/(divWidth/1080)+"")).toFile(path + '.combined.jpg').then(r => {
+                    resolve("ok")
+                });
             });
         } catch (e) {
             console.error(e);
