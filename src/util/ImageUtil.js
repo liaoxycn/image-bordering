@@ -73,7 +73,7 @@ const coverImage = (path = "", template = "temp1") => {
                 }
                 console.log(`(divHeight=${h}/1080)=` + (h / 1080));
                 sharp(data).resize(w, undefined).toFile(path + '.combined.jpg').then(r => {
-                    resolve("ok")
+                    resolve(path + '.combined.jpg')
                 });
             });
         } catch (e) {
@@ -83,9 +83,32 @@ const coverImage = (path = "", template = "temp1") => {
     })
 }
 
+const compress = async (path = "") => {
+    return new Promise((resolve, reject) => {
+        try {
+            sharp(path)
+                .metadata()
+                .then(({width}) => {
+                    let w = width;
+                    if (width > 2160) {
+                        w = 2160
+                    } else if (width > 1080) {
+                        w = 1080
+                    }
+                    sharp(path).resize(w).toFile(path + ".compress.jpg").then(r => {
+                        resolve(path + '.compress.jpg')
+                    });
+                });
+        } catch (e) {
+            reject(e);
+        }
+    });
+}
+
 module.exports = {
     getFileMetadata: getFileMetadata,
     coverImage: coverImage,
+    compressImage: compress,
     close() {
         exiftool.end();
     }

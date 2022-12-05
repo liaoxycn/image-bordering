@@ -152,6 +152,8 @@ const getLogo = (make = "", lens = "") => {
             make = "sony";
         } else if (lens.includes("NIKKOR")) {
             make = "nikon";
+        } else if (lens.startsWith("GF")) {
+            make = "fujifilm";
         }
     }
     let obj = logoTextMap[make] || logoTextMap["leica"];
