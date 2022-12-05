@@ -46,7 +46,7 @@ const coverImage = (path = "", template = "temp1") => {
                 path: path,
                 metadata: tags,
             };
-            let {buff, divHeight=0, divWidth=0} = await TemplateUtil.getTemp1(file);
+            let {buff, divHeight = 0, divWidth = 0} = await TemplateUtil.getTemp1(file);
             console.log({
                 divHeight: divHeight,
                 width: file.metadata.ImageWidth,
@@ -63,10 +63,16 @@ const coverImage = (path = "", template = "temp1") => {
             }).composite([
                 {input: path, gravity: 'northwest', top: 0, left: 0},
                 {input: buff, gravity: 'southeast', top: file.metadata.ImageHeight, left: 0},
-            ]).jpeg({}).toBuffer().then((data)=>{
+            ]).jpeg({}).toBuffer().then((data) => {
                 let h = file.metadata.ImageHeight + divHeight;
-                console.log(`(divHeight=${h}/1080)=`+(h/1080));
-                sharp(data).resize(1080, parseInt(h/(divWidth/1080)+"")).toFile(path + '.combined.jpg').then(r => {
+                let w = divWidth;
+                if (divWidth > 2160) {
+                    w = 2160
+                } else if (divWidth > 1080) {
+                    w = 1080
+                }
+                console.log(`(divHeight=${h}/1080)=` + (h / 1080));
+                sharp(data).resize(w, undefined).toFile(path + '.combined.jpg').then(r => {
                     resolve("ok")
                 });
             });

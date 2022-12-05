@@ -148,7 +148,9 @@ const getLogo = (make = "", lens = "") => {
             make = "canon";
         } else if (lens.startsWith("FE")) {
             make = "sony";
-        } else if (lens.startsWith("NIKKOR")) {
+        }  else if (lens.includes("FE")) {
+            make = "sony";
+        } else if (lens.includes("NIKKOR")) {
             make = "nikon";
         }
     }
@@ -207,7 +209,7 @@ const getTemp1 = ({
             // })
             //替换字符
             let leftChar;
-            let leftBottomChar;
+            let leftBottomChar = "";
             if (metadata.Model || metadata.Make) {
                 leftChar = metadata.Model || metadata.Make;
                 leftBottomChar = metadata.LensModel || metadata.LensInfo || '--by --';
@@ -227,6 +229,7 @@ const getTemp1 = ({
             rightSvg = rightSvg.replace("85mm f/2 1/500 ISO 100", sss || "00mm f/1 1/1000 ISO 100");
             //时间格式
             let tt = formatDate(metadata.CreateDate || metadata.DateTimeOriginal || metadata.FileCreateDate);
+            // let tt = metadata.ImageSize || (metadata.ImageWidth+"x"+metadata.ImageHeight);
 
             rightSvg = rightSvg.replace("2022.08.21 17:01:04", tt || "0000.00.00 00:00:00");
             const leftBuffer = Buffer.from(leftSvg);

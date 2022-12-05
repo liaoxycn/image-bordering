@@ -32,7 +32,7 @@ arguments.forEach((val, index) => {
 // console.log('Oh, ' + template + ' and ' + confirm + '!');
 
 //代码添加图片列表路径
-imagePaths.push("D:\\Pictures\\A7R4\\20221127\\jpg\\DSC09059-x50-[14.54].jpg");
+// imagePaths.push("D:\\Pictures\\A7R4\\20221204\\jpg\\DSC09354-x1-[16.14].jpg");
 // imagePaths.push("D:\\Pictures\\A7R4\\20221114\\jpg\\20221114_PixCake\\DSC08423-x1-[16.30].jpg");
 
 //
