@@ -19,3 +19,6 @@ python .\Windows\添加到右键菜单.py
 python .\Windows\删除右键菜单.py
 
 ```
+
+#####
+一次最多选9张图片
