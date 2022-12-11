@@ -32,7 +32,7 @@ def add_show_menu():
     :return: None
     '''
     # 菜单名称
-    menu_name = 'ImageBordering'
+    menu_name = '边框水印'
     # 执行一个python脚本的命令，用于打印命令行参数的第二个参数（即选中的文件路径）
     dir = os.path.dirname(os.path.abspath(__file__))
     py_command = dir+'\加边框.bat'
@@ -40,7 +40,7 @@ def add_show_menu():
 
 
     # 添加文件右键菜单
-#     add_context_menu(menu_name,py_command,reg.HKEY_CLASSES_ROOT,r'*\\shell','B')
+    add_context_menu(menu_name,py_command,reg.HKEY_CLASSES_ROOT,r'*\\shell','B')
 
 if __name__ == '__main__':
     params = sys.argv[0].strip()

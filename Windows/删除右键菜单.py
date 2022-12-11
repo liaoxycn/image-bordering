@@ -29,5 +29,5 @@ def delete_reg_key(root_key,key,menu_name):
                 reg.DeleteKey(parent_key,menu_name)
 
 if __name__ == '__main__':
-    menu_name = 'ImageBordering'
+    menu_name = '边框水印'
     delete_reg_key(reg.HKEY_CLASSES_ROOT,r'*\\shell',menu_name)
