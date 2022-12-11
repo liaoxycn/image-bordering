@@ -1,0 +1,16 @@
+
+Win11右键显示更多选项设置教程
+
+1、首先用鼠标右键点击“开始”按钮（或者按Win+X键），选择点击 “Windows 终端（管理员）”。
+
+2、然后在终端应用程序里粘贴这串代码【reg.exe add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve】并按回车键。
+
+3、操作成功之后，重启Win11电脑就可以看到跟以前win10一样的右键菜单啦。
+
+
+
+恢复Win11新右键菜单的方法：
+
+　　1、还是一样打开 Windows 终端（管理员），直接输入这串代码【reg.exe delete "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /va /f】
+
+　　2、然后显示操作成功，重启之后，就可以恢复了。
