@@ -66,13 +66,15 @@ const coverImage = (path = "", template = "temp1") => {
             ]).jpeg({}).toBuffer().then((data) => {
                 let h = file.metadata.ImageHeight + divHeight;
                 let w = divWidth;
-                if (divWidth > 2160) {
-                    w = 2160
+                /*if (divWidth > 4000) {
+                    w = 4000
+                } else */if (divWidth > 2000) {
+                    w = 2000
                 } else if (divWidth > 1080) {
                     w = 1080
                 }
                 console.log(`(divHeight=${h}/1080)=` + (h / 1080));
-                sharp(data).resize(w, undefined).toFile(path + '.combined.jpg').then(r => {
+                sharp(data).resize(w, undefined).jpeg({quality: 60,}).toFile(path + '.combined.jpg').then(r => {
                     resolve(path + '.combined.jpg')
                 });
             });
@@ -90,12 +92,14 @@ const compress = async (path = "") => {
                 .metadata()
                 .then(({width}) => {
                     let w = width;
-                    if (width > 2160) {
-                        w = 2160
+                    if (width > 2000) {
+                        w = 2000
                     } else if (width > 1080) {
                         w = 1080
                     }
-                    sharp(path).resize(w).toFile(path + ".compress.jpg").then(r => {
+                    sharp(path).resize(w).jpeg({
+                        quality: 60
+                    }).toFile(path + ".compress.jpg").then(r => {
                         resolve(path + '.compress.jpg')
                     });
                 });
