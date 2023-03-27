@@ -150,7 +150,7 @@ const getLogo = (make = "", lens = "") => {
             make = "sony";
         }  else if (lens.includes("FE")) {
             make = "sony";
-        } else if (lens.includes("NIKKOR")) {
+        } else if (lens.includes("NIKKOR") || /^\w+\s+f\/\d+.\d+Z.*/.test(lens)) {
             make = "nikon";
         } else if (lens.startsWith("GF")) {
             make = "fujifilm";
