@@ -144,11 +144,9 @@ const getLogo = (make = "", lens = "") => {
     make = make || "";
     lens = lens || "";
     if (!make) {
-        if (lens.startsWith("EF")) {
+        if (lens.startsWith("EF") || lens.startsWith("RF")) {
             make = "canon";
-        } else if (lens.startsWith("FE")) {
-            make = "sony";
-        }  else if (lens.includes("FE")) {
+        } else if (lens.includes("FE")) {
             make = "sony";
         } else if (lens.includes("NIKKOR") || /^\w+\s+f\/\d+.\d+Z.*/.test(lens)) {
             make = "nikon";
@@ -226,7 +224,7 @@ const getTemp1 = ({
             leftSvg = leftSvg.replace("ILCE-7RM4", leftChar).replace("--by --", leftBottomChar);
             //
             let len = metadata.FocalLength.replace(" ", "").replace(".0", "") || "00mm";
-            let sss = len + " f/" + (metadata.FNumber || "1") + " " + (metadata.ExposureTime || "1/1000") + " ISO " + (metadata.ISO || "100");
+            let sss = len + " f/" + (metadata.FNumber || "1") + " " + (metadata.ExposureTime || "1/1000") + " ISO" + (metadata.ISO || "100");
             // console.log(sss)
             rightSvg = rightSvg.replace("85mm f/2 1/500 ISO 100", sss || "00mm f/1 1/1000 ISO 100");
             //时间格式
